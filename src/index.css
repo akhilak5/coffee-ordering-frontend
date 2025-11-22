@@ -1,13 +1,34 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+﻿/* src/index.css */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* src/index.css (append) */
+
+/* ensure full height root */
+html, body, #root { height: 100%; }
+
+/* small hero helpers kept consistent */
+.hero-bg {
+  background-position: center 70%;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* modal fix (centering) already used in Home modal; nothing else needed */
+
+
+/* toast / small animation (if you use animate-toastSlide) */
+@keyframes toastSlide {
+  0% { opacity: 0; transform: translateY(-8px) scale(0.98); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
 }
+.animate-toastSlide { animation: toastSlide 0.25s ease-out; }
+
+/* subtle section separator (optional utility)
+   Use by adding border-t border-gray-100 to a section wrapper if desired */
+.section-divider { border-top: 1px solid rgba(229,231,235,1); } /* tailwind gray-200 */
+
+
+
