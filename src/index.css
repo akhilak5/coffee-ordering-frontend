@@ -7,6 +7,9 @@
 /* src/index.css (append) */
 
 /* ensure full height root */
+/* put this at the top of src/index.css */
+body { margin: 0; }
+
 html, body, #root { height: 100%; }
 
 /* small hero helpers kept consistent */

@@ -1,7 +1,16 @@
 // src/pages/Home.jsx
-import React, { useState } from "react";
 
-export default function Home({ addToCart }) {
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+export default function Home() {
+  const navigate = useNavigate();
+
+  // change this path if your MenuPage route is different
+  const navigateToMenu = () => {
+    navigate("/dashboard/menu"); // e.g. "/menu" or "/user/menu"
+  };
+
   const ITEMS = [
     {
       id: 1,
@@ -57,25 +66,33 @@ export default function Home({ addToCart }) {
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full ">
       {/* HERO */}
       <section
-        className="relative w-full h-screen flex items-center justify-center bg-cover bg-no-repeat"
+        className="relative w-full flex items-center justify-center bg-cover bg-no-repeat"
         style={{
+          height: "calc(100vh - 72px)",
           backgroundImage: "url('/bg.jpg')",
-          backgroundPosition: "50% 110%",
+          backgroundPosition: "center 85%",
           backgroundSize: "cover",
         }}
       >
         <div className="absolute inset-0 bg-black/16"></div>
 
-        <div className="relative z-10 text-center px-4 -mt-48 md:-mt-[17rem]">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white drop-shadow-lg">
+        <div className="relative z-10 text-center px-4 -mt-12 sm:-mt-16 md:-mt-44">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white drop-shadow-lg leading-tight">
             Welcome to JavaBite
           </h1>
           <p className="mt-3 text-lg md:text-xl text-white/90 max-w-2xl mx-auto">
             Relax, sip, and enjoy the best coffee in town.
           </p>
+
+          {/* Optional: direct “Order Now” from hero */}
+          <button
+            onClick={navigateToMenu}
+            className="mt-6 px-6 py-3 rounded-lg bg-amber-700 text-white font-semibold hover:bg-amber-800 transition"
+          >Login to Order
+          </button>
         </div>
       </section>
 
@@ -135,12 +152,18 @@ export default function Home({ addToCart }) {
                   </div>
                 </div>
 
-                <div className="mt-4">
+                <div className="mt-4 flex gap-2">
                   <button
                     onClick={() => openView(item)}
-                    className="w-full px-4 py-2 rounded-lg text-sm font-medium bg-amber-700 text-white hover:bg-amber-800 transition"
+                    className="w-full px-4 py-2 rounded-lg text-sm font-medium bg-white border border-amber-700 text-amber-700 hover:bg-amber-50 transition"
                   >
                     View
+                  </button>
+                  <button
+                    onClick={navigateToMenu}
+                    className="w-full px-4 py-2 rounded-lg text-sm font-medium bg-amber-700 text-white hover:bg-amber-800 transition"
+                  >
+                    Order Now
                   </button>
                 </div>
               </article>
@@ -203,7 +226,7 @@ export default function Home({ addToCart }) {
         </div>
       </section>
 
-      {/* VIEW MODAL — OPTION C (small centered image) */}
+      {/* VIEW MODAL */}
       {viewItem && (
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
           <div className="absolute inset-0 bg-black/50" onClick={closeView}></div>
@@ -250,12 +273,12 @@ export default function Home({ addToCart }) {
                   <div className="mt-6 flex gap-3">
                     <button
                       onClick={() => {
-                        addToCart(viewItem, qty);
                         closeView();
+                        navigateToMenu(); // go to dashboard menu for actual ordering
                       }}
                       className="bg-amber-700 text-white px-5 py-2 rounded hover:bg-amber-800 transition"
                     >
-                      Add to cart
+                      Login to Order
                     </button>
                     <button className="border px-5 py-2 rounded" onClick={closeView}>Close</button>
                   </div>
@@ -281,4 +304,3 @@ function Bullet({ title, text }) {
     </div>
   );
 }
-

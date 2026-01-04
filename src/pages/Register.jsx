@@ -7,7 +7,7 @@ export default function Register({ onRegistered, showToast }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [msg, setMsg] = useState(null); // { error, field }
+  const [msg, setMsg] = useState(null);
   const [loading, setLoading] = useState(false);
 
   async function submit(e) {
@@ -25,15 +25,14 @@ export default function Register({ onRegistered, showToast }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, password }),
       });
+
       const data = await res.json();
 
       if (data?.error) {
-        setMsg({ error: data.error, field: data.error.toLowerCase().includes("email") ? "email" : null });
-        setLoading(false);
-        return;
-      }
-      if (!res.ok) {
-        setMsg({ error: data?.error || "Register failed", field: null });
+        setMsg({
+          error: data.error,
+          field: data.error.toLowerCase().includes("email") ? "email" : null,
+        });
         setLoading(false);
         return;
       }
@@ -48,7 +47,8 @@ export default function Register({ onRegistered, showToast }) {
   }
 
   return (
-    <div className="min-h-[calc(100vh-64px)] w-full relative overflow-hidden">
+    <div className="min-h-screen w-full relative overflow-hidden">
+
       {/* background */}
       <img
         src="/bg.jpg"
@@ -58,10 +58,11 @@ export default function Register({ onRegistered, showToast }) {
       />
       <div className="absolute inset-0 bg-black/40"></div>
 
-      {/* centered card */}
-      <div className="relative z-10 flex items-center justify-center px-4 py-12">
+      {/* card moved UP */}
+      <div className="relative z-10 flex items-start justify-center px-4 pt-10 pb-12">
         <div className="w-full max-w-md">
           <div className="rounded-3xl bg-gradient-to-br from-white/95 to-amber-50/60 backdrop-blur-sm shadow-2xl p-8 transform transition-all hover:-translate-y-1">
+
             {/* logo */}
             <div className="flex justify-center mb-4">
               <img
@@ -91,7 +92,9 @@ export default function Register({ onRegistered, showToast }) {
             <form onSubmit={submit} className="space-y-6">
               <input
                 className={`w-full border p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-300 transition ${
-                  msg?.field === "name" ? "border-red-500 ring-red-200" : "border-gray-200"
+                  msg?.field === "name"
+                    ? "border-red-500 ring-red-200"
+                    : "border-gray-200"
                 }`}
                 placeholder="Name"
                 value={name}
@@ -100,10 +103,11 @@ export default function Register({ onRegistered, showToast }) {
                 autoComplete="name"
               />
 
-              {/* extra space between name and email implemented by space-y-6 */}
               <input
                 className={`w-full border p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-300 transition ${
-                  msg?.field === "email" ? "border-red-500 ring-red-200" : "border-gray-200"
+                  msg?.field === "email"
+                    ? "border-red-500 ring-red-200"
+                    : "border-gray-200"
                 }`}
                 placeholder="Email"
                 value={email}
@@ -138,9 +142,11 @@ export default function Register({ onRegistered, showToast }) {
           </div>
         </div>
       </div>
+
     </div>
   );
 }
+
 
 
 
